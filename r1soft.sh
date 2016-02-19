@@ -70,7 +70,7 @@ then
 	if [ $OS = 'Centos' ]
 	then
 	echo "calling rpm based"
-	#rpm_based
+	rpm_based
 	elif [ $flv = "Ubuntu" ]
 	then
 #	debian_based
