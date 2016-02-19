@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 url="null"
 pro="http://"
 port="1167"
