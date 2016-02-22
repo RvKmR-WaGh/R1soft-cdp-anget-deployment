@@ -78,6 +78,7 @@ then
 	else
 	echo "Unknown os please try manual installation"	
 	fi
+echo -e "\n\e[100mThanks for using r1soft cdp-agent deployment script\e[m"
 elif [ $c == "n" ]
 then
 	echo -e "\n\e[100mThanks for using r1soft cdp-agent deployment script\e[m"
