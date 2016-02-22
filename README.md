@@ -1,4 +1,5 @@
 Script is used to deply R1soft's CDP-agnet on Linux servers.
+
 Script must be run as root user or sudo user.
 
 Steps to run/install cdp-agent script
