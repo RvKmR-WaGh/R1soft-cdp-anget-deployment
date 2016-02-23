@@ -4,7 +4,7 @@ Script must be run as root user or sudo user.
 
 Steps to run/install cdp-agent script
 
-1. Download script
+1. Copy script from this url to file on your server.
 
 2. save it with "file_name.sh" 
 
