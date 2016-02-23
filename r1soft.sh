@@ -15,7 +15,7 @@ fi
 elif [ -f /etc/redhat-release ]; then
 if [ `cat /etc/redhat-release |grep -i Fedora |wc -l` -gt 0 ] ;then
 OS="Fedora";
-elif [ `cat /etc/redhat-release |grep -Ei 'Centos|CloudLinux|XenServer|XCP' |wc -l` -gt 0 ] ;then
+elif [ `cat /etc/redhat-release |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
 OS="Centos";
 else
 OS="None"
