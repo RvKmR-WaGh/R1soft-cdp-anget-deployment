@@ -15,13 +15,13 @@ fi
 elif [ -f /etc/redhat-release ]; then
 if [ `cat /etc/redhat-release |grep -i Fedora |wc -l` -gt 0 ] ;then
 OS="Fedora";
-elif [ `cat /etc/redhat-release |grep -Ei 'Centos|CloudLinux|XenServer|XCP' |wc -l` -gt 0 ] ;then
+elif [ `cat /etc/redhat-release |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
 OS="Centos";
 else
 OS="None"
 fi
 else
-os="none"
+OS="None"
 fi
 }
 rpm_based(){
@@ -31,6 +31,7 @@ echo -e "\e[92mInstalling CDP-agent-->\e[m\n"
 yum -y install r1soft-cdp-enterprise-agent
 read -p "Enter backup server IP or host name :" url
 key=$pro$url
+echo -e "\e[92mInstalling Key\e[m\n\n"
 r1soft-setup --get-key $key
 echo -e "\e[92mInstalling Kernel devel-->\e[m\n"
 yum -y install kernel-devel-$(uname -r)
@@ -64,6 +65,7 @@ echo "Operating system found :"$OS
 fs=$(fsck -N /dev/sda | awk FNR==2{'print $5'})
 echo -e "File system found :$fs\n"
 echo -n -e "Do you wish to continue with this file system: \e[100m(y/n)\e[m:"
+read -p "Enter backup server IP or host name :" url
 read c
 if [ $c == "y" ]
 then
