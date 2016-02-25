@@ -1,4 +1,4 @@
-Script is used to deply R1soft's CDP-agnet on Linux servers.
+Script is used to deploy R1soft's CDP-agnet on Linux servers.
 
 Script must be run as root user or sudo user.
 
