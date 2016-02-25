@@ -1,6 +1,6 @@
 #!/bin/bash
 #######################################
-#Author: By Ravikuamr Wagh
+#Author:  Ravikuamr Wagh
 #Note : Please do not update script content
 #######################################
 url="null"
