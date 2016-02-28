@@ -19,8 +19,8 @@ fi
 elif [ -f /etc/redhat-release ]; then
 if [ `cat /etc/redhat-release |grep -i Fedora |wc -l` -gt 0 ] ;then
 OS="Fedora";
-elif [ `cat /etc/redhat-release |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
-OS="Centos";
+elif [ `cat /etc/redhat-release |grep -Ei 'Centos | CloudLinux' |wc -l` -gt 0 ] ;then
+OS=$(cat /etc/redhat-release)
 else
 OS="None"
 fi
