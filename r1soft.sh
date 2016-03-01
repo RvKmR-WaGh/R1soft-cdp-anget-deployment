@@ -57,11 +57,15 @@ echo  "\e[92mUpdating system-->\e[m\n"
 apt-get update
 echo  "\e[92mInstalling CDP-agent-->\e[m\n"
 apt-get install r1soft-cdp-enterprise-agent
+read -p "Enter backup server IP or host name :" url
+key=$pro$url
+r1soft-setup --get-key $key
 echo  "\e[92mInstalling Kernel devel-->\e[m\n"
 apt-get install kernel-devel
 r1soft-setup --get-module
 echo -e "\e[92Restarting cdp-agent-->\e[m\n"
 /etc/init.d/cdp-agent restart
+
 }
 ######MAIN FUNCTION#########
 echo -e "\n\e[100mWelcome to r1soft cdp-agent deployment script\e[m"
@@ -79,8 +83,8 @@ then
 	rpm_based
 	elif [ $flv = "Ubuntu" ]
 	then
-#	debian_based
-	echo "Comming soon"
+	debian_based
+#	echo "Comming soon"
 	else
 	echo "Unknown os please try manual installation"	
 	fi
