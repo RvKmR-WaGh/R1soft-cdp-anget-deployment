@@ -10,9 +10,11 @@ find_distro()
 {
 if [ -f '/etc/debian_version' ]; then
 if [ `cat /etc/debian_version |grep -i 'Debian' |wc -l` -gt 0 ] ;then
-OS="Debian";
+OS=$(cat /etc/debian_version);
 elif [ `cat /etc/debian_version |grep -i 'Ubuntu' |wc -l` -gt 0 ] ;then
-OS="Ubuntu";
+OS=$(cat /etc/debian_version);
+elif [ `cat /etc/issue |grep -i 'Ubuntu' |wc -l` -gt 0 ] ;then
+OS=$(cat /etc/issue);
 else
 OS="None"
 fi
