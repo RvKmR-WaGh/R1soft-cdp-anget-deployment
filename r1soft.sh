@@ -79,11 +79,11 @@ echo -n -e "Do you wish to continue with this file system: \e[100m(y/n)\e[m:"
 read c
 if [ $c == "y" ]
 then
-	if [ $OS = 'Centos' ]
+	if [ $OS='Centos' ]
 	then
 	echo "calling rpm based"
 	rpm_based
-	elif [ $flv = "Ubuntu" ]
+	elif [ $flv="Ubuntu" ]
 	then
 	debian_based
 #	echo "Comming soon"
