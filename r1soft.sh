@@ -20,11 +20,11 @@ OS="None"
 fi
 elif [ -f /etc/redhat-release ]; then
 if [ `cat /etc/redhat-release |grep -i 'Fedora' |wc -l` -gt 0 ] ;then
-OS=$(cat /etc/redhat-release);
+OS=$(cat /etc/redhat-release |grep -Ei 'Fedora');
 elif [ `cat /etc/redhat-release |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
-OS=$(cat /etc/redhat-release)
+OS=$(cat /etc/redhat-release |grep -Ei 'Centos')
 elif [ `cat /etc/redhat-release |grep -Ei 'CloudLinux' |wc -l` -gt 0 ] ;then
-OS=$(cat /etc/redhat-release)
+OS=$(cat /etc/redhat-release |grep -Ei 'CloudLinux')
 else
 OS="None"
 fi
@@ -45,10 +45,13 @@ yum -y install kernel-devel-$(uname -r)
 r1soft-setup --get-module
 echo -e "\e[92mRestarting cdp-agent-->\e[m\n"
 /etc/init.d/cdp-agent restart
-echo -e "\e[92mAdding firewall rules-->\e[m\n"
+if [ -f /usr/sbin/csf  ] ;then
+echo -e "\e[92mcsf firewall found\e[m\n"
 echo "tcp/udp|in/out|d=$port|s=$url" >> /etc/csf/csf.allow
+echo -e "\e[92mFirewall rules added-->\e[m\n"
 echo -e "\e[92mRestarting CSF-->\e[m\n"
 csf -r
+fi
 }
 debian_based(){
 echo  "\e[94mAddinr R1soft repo to sources list\e[92m\n"
@@ -72,7 +75,7 @@ echo -e "\e[92Restarting cdp-agent-->\e[m\n"
 ######MAIN FUNCTION#########
 echo -e "\n\e[100mWelcome to r1soft cdp-agent deployment script\e[m"
 find_distro
-echo "Operating system found :"$OS
+echo "Operating system found :"$(cat /etc/redhat-release)
 fs=$(fsck -N /dev/sda | awk FNR==2{'print $5'})
 echo -e "File system found :$fs\n"
 echo -n -e "Do you wish to continue with this file system: \e[100m(y/n)\e[m:"
@@ -96,4 +99,3 @@ then
 	echo -e "\n\e[100mThanks for using r1soft cdp-agent deployment script\e[m"
 	exit
 fi
-
