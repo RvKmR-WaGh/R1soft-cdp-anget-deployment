@@ -56,7 +56,7 @@ rpm_based(){
 echo -e "\e[94mCreating R1soft Repo\e[92m\n"
 echo -e "[r1soft]\nname=R1Soft Repository Server\nbaseurl=http://repo.r1soft.com/yum/stable/\$basearch/\nenabled=1\ngpgcheck=0" >>/etc/yum.repos.d/r1soft.repo
 echo -e "\e[92mInstalling CDP-agent-->\e[m\n"
-yu -y install r1soft-cdp-enterprise-agent
+yum -y install r1soft-cdp-enterprise-agent
 echo -e "\e[92mInstalling Kernel devel-->\e[m\n"
 yum -y install kernel-devel-$(uname -r)
 r1soft-setup --get-module
