@@ -11,6 +11,9 @@ if [ -f '/etc/issue' ]; then
 	if [ `cat /etc/issue |grep -i 'Ubuntu' |wc -l` -gt 0 ] ;then
 		OS='Ubuntu';
 		optsys=$(cat /etc/issue | awk '{print $1,$2}')
+	elif [ `cat /etc/issue |grep -i 'Linux Mint' |wc -l` -gt 0 ] ;then
+		OS='Ubuntu';
+		optsys=$(cat /etc/issue | awk '{print $1,$2,$3}')
 	elif [ `cat /etc/issue |grep -i 'Debian' |wc -l` -gt 0 ] ;then
 		optsys=$(cat /etc/issue | awk '{print $1,$2}')
 	elif [ `cat /etc/issue |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
@@ -46,7 +49,7 @@ os="none"
 fi
 echo -e "\n..........................................."
 echo -e "\e[94m\nOperating system found : \e[m$optsys" 
-echo -e "\e[94mKernel release : \e[m$(uname -r)\n"
+echo -e "\e[94mKernel release : \e[m$(uname -r)"
 }
 
 rpm_based(){
@@ -79,7 +82,7 @@ apt-get install r1soft-cdp-enterprise-agent
 echo  "\e[92mInstalling Kernel devel-->\e[m\n"
 apt-get install kernel-devel
 r1soft-setup --get-module
-echo -e "\e[92Restarting cdp-agent-->\e[m\n"
+echo -e "\e[92mRestarting cdp-agent-->\e[m\n"
 /etc/init.d/cdp-agent restart
 }
 ######MAIN FUNCTION#########
@@ -100,16 +103,17 @@ if [ $c == "y" ];
 then
 	if [ "$OS" = "$deb" ]
                 then
-        #       debian_based
+               debian_based
                 echo "Comming soon"
-
+		r1soft-setup --get-key $key
 	elif [ "$OS" = "$cent" ]
 	        then
 	        echo "calling rpm based"
+	#	rpm_based
+		r1soft-setup --get-key $key
 	else
 	        echo "Unknown os please try manual installation"
 	fi
-r1soft-setup --get-key $key
 echo -e "\n\e[100mThanks for using r1soft cdp-agent deployment script\e[m"
 elif [ $c == "n" ];
 	then
