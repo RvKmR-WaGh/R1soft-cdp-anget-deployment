@@ -47,43 +47,62 @@ elif [ -f /etc/redhat-release ]; then
 else
 os="none"
 fi
+
 echo -e "\n..........................................."
+echo -e "\n..........................................." > log 2>err
 echo -e "\e[94m\nOperating system found : \e[m$optsys" 
+echo -e "\e[94m\nOperating system found : \e[m$optsys" > log 2>err 
 echo -e "\e[94mKernel release : \e[m$(uname -r)"
+echo -e "\e[94mKernel release : \e[m$(uname -r)" > log 2>err
 }
 
 rpm_based(){
 echo -e "\e[94mCreating R1soft Repo\e[92m\n"
 echo -e "[r1soft]\nname=R1Soft Repository Server\nbaseurl=http://repo.r1soft.com/yum/stable/\$basearch/\nenabled=1\ngpgcheck=0" >>/etc/yum.repos.d/r1soft.repo
-echo -e "\e[92mInstalling CDP-agent-->\e[m\n"
-yum -y install r1soft-cdp-enterprise-agent
-echo -e "\e[92mInstalling Kernel devel-->\e[m\n"
-yum -y install kernel-devel-$(uname -r)
-r1soft-setup --get-module
-echo -e "\e[92mRestarting cdp-agent-->\e[m\n"
-/etc/init.d/cdp-agent restart
+echo -e "\e[92mInstalling CDP-agent_ _\e[m\n" > log 2>err
+echo -e "\e[92mInstalling CDP-agent_ _\e[m\n"
+yum -y install r1soft-cdp-enterprise-agent > log 2>err
+echo -e "\e[92mInstalling Kernel devel_ _\e[m\n" > log 2>err
+echo -e "\e[92mInstalling Kernel devel_ _\e[m\n"
+yum -y install kernel-devel-$(uname -r) > log 2>err
+echo -e "\e[92mInstalling HCP drivers_ _\e[m\n" > log 2>err
+echo -e "\e[92mInstalling HCP drivers_ _\e[m\n"
+r1soft-setup --get-module > log 2>err
+echo -e "\e[92mRestarting cdp-agent_ _\e[m\n" > log 2>err
+echo -e "\e[92mRestarting cdp-agent_ _\e[m\n"
+/etc/init.d/cdp-agent restart > log 2>err
 if [ -f /usr/sbin/csf  ] ;then
+echo -e "\e[92mcsf firewall found\e[m\n" > log 2>err
 echo -e "\e[92mcsf firewall found\e[m\n"
 echo "tcp/udp|in/out|d=$port|s=$url" >> /etc/csf/csf.allow
-echo -e "\e[92mFirewall rules added-->\e[m\n"
-echo -e "\e[92mRestarting CSF-->\e[m\n"
-csf -r
+echo -e "\e[92mFirewall rules added_ _\e[m\n" > log 2>err
+echo -e "\e[92mFirewall rules added_ _\e[m\n"
+echo -e "\e[92mRestarting CSF_ _\e[m\n" > log 2>err
+echo -e "\e[92mRestarting CSF_ _\e[m\n"
+csf -r > log 2>err
 fi
 }
 debian_based(){
-echo  "\e[94mAdding R1soft repo to sources list\e[92m\n"
+echo -e "\e[94mAdding R1soft repo to sources list\e[92m\n" > log 2>err
+echo -e "\e[94mAdding R1soft repo to sources list\e[92m\n" 
 echo  "deb http://repo.r1soft.com/apt stable main" >>/etc/apt/sources.list
-wget http://repo.r1soft.com/r1soft.asc
-apt-key add r1soft.asc
-echo  "\e[92mUpdating system-->\e[m\n"
-apt-get update
-echo  "\e[92mInstalling CDP-agent-->\e[m\n"
-apt-get install r1soft-cdp-enterprise-agent
-echo  "\e[92mInstalling Kernel devel-->\e[m\n"
-apt-get install kernel-devel
-r1soft-setup --get-module
-echo -e "\e[92mRestarting cdp-agent-->\e[m\n"
-/etc/init.d/cdp-agent restart
+wget http://repo.r1soft.com/r1soft.asc > log 2>err
+apt-key add r1soft.asc > log 2>err
+echo -e "\e[92mUpdating system_ _\e[m\n" > log 2>err
+echo -e "\e[92mUpdating system_ _\e[m\n"
+apt-get -y update > log 2>err
+echo -e "\e[92mInstalling CDP-agent_ _\e[m\n" > log 2>err
+echo -e "\e[92mInstalling CDP-agent_ _\e[m\n"
+apt-get -y install r1soft-cdp-enterprise-agent > log 2>err
+echo -e "\e[92mInstalling Kernel devel_ _\e[m\n" > log 2>err
+echo -e "\e[92mInstalling Kernel devel_ _\e[m\n"
+apt-get -y install kernel-devel > log 2>err
+echo -e "\e[92mInstalling HCP drivers_ _\e[m\n" > log 2>err
+echo -e "\e[92mInstalling HCP drivers_ _\e[m\n"
+r1soft-setup --get-module > log 2>err
+echo -e "\e[92mRestarting cdp-agent_ _\e[m\n" > log 2>err
+echo -e "\e[92mRestarting cdp-agent_ _\e[m\n"
+/etc/init.d/cdp-agent restart > log 2>err
 }
 ######MAIN FUNCTION#########
 
@@ -92,8 +111,10 @@ read -p "Enter backup server IP or host name :" url
 key=$pro$url
 find_distro
 fs=$(fsck -N /dev/sda | awk FNR==2{'print $5'}) #DO NOT EDIT THIS, MAY CAUSE ISSUE WITh YOUR SERVER FILESYTESM.
+echo -e "\e[94mFile system found : \e[m$fs" > log 2>err 
 echo -e "\e[94mFile system found : \e[m$fs"
 echo -e "...........................................\n"
+echo -e "...........................................\n" > log 2>err
 echo -n -e "Do you wish to continue with this file system: \e[100m(y/n)\e[m:"
 read c
 echo $OS
@@ -104,12 +125,12 @@ then
 	if [ "$OS" = "$deb" ]
                 then
                debian_based
-                echo "Comming soon"
+         #       echo "Comming soon"
 		r1soft-setup --get-key $key
 	elif [ "$OS" = "$cent" ]
 	        then
-	        echo "calling rpm based"
-	#	rpm_based
+	#        echo "calling rpm based"
+		rpm_based
 		r1soft-setup --get-key $key
 	else
 	        echo "Unknown os please try manual installation"
