@@ -7,7 +7,18 @@ pro="http://"
 port="1167"
 find_distro()
 {
-if [ -f '/etc/issue' ]; then
+if [ -f /etc/redhat-release ]; then
+	optsys=$(cat /etc/redhat-release)
+	if [ `cat /etc/redhat-release |grep -i 'Fedora' |wc -l` -gt 0 ] ;then
+		OS='Centos';
+	elif [ `cat /etc/redhat-release |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
+		OS='Centos';
+	elif [ `cat /etc/redhat-release |grep -Ei 'CloudLinux' |wc -l` -gt 0 ] ;then
+		OS='Centos';
+	else
+		OS="None"
+	fi
+elif [ -f '/etc/issue' ]; then
 	if [ `cat /etc/issue |grep -i 'Ubuntu' |wc -l` -gt 0 ] ;then
 		OS='Ubuntu';
 		optsys=$(cat /etc/issue | awk '{print $1,$2}')
@@ -29,18 +40,6 @@ elif [ -f '/etc/debian_version' ]; then
 	elif [ `cat /etc/debian_version |grep -i 'Debian' |wc -l` -gt 0 ] ;then
 		OS='Debian';
 		optsys=$(cat /etc/issue)
-	else
-		OS="None"
-	fi
-		
-elif [ -f /etc/redhat-release ]; then
-	optsys=$(cat /etc/redhat-release)
-	if [ `cat /etc/redhat-release |grep -i 'Fedora' |wc -l` -gt 0 ] ;then
-		OS='Centos';
-	elif [ `cat /etc/redhat-release |grep -Ei 'Centos' |wc -l` -gt 0 ] ;then
-		OS='Centos';
-	elif [ `cat /etc/redhat-release |grep -Ei 'CloudLinux' |wc -l` -gt 0 ] ;then
-		OS='Centos';
 	else
 		OS="None"
 	fi
