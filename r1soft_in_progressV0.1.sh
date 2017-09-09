@@ -1,3 +1,6 @@
+#cdp-agent installation script
+#Author Ravikumar Wagh <wagh1.ravi@gmail.com>
+
 rpm_based(){
 ####Creaing repo On RPM type servers####
 if [ -f /etc/yum.repos.d/r1soft.repo ]
